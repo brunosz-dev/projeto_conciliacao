@@ -13,6 +13,12 @@ class FormaPagamento(Enum):
     PIX = "pix"
     BOLETO = "boleto"
 
+class StatusTransacao(Enum):
+    """Estados possíveis de uma transação no portal."""
+    APROVADO = "Aprovado"
+    PENDENTE = "Pendente"
+    DIVERGENTE = "Pendente (Divergência)"
+
 
 # Configuração de taxas (facilita manutenção!)
 TAXAS_CONFIG = {
