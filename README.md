@@ -1,5 +1,10 @@
 # 📊 Projeto de Conciliação Financeira
 
+![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
+![Tests](https://img.shields.io/badge/tests-pytest-green.svg)
+![Coverage](https://img.shields.io/badge/coverage-89%25-brightgreen.svg)
+![Status](https://img.shields.io/badge/status-active-success.svg)
+
 Sistema de conciliação financeira desenvolvido em Python para processar vendas, calcular taxas, lucro, ROI e gerar relatórios Excel formatados.
 
 Este projeto foi estruturado com foco em **qualidade de código, testabilidade e arquitetura profissional**, simulando um cenário real de backend financeiro.
@@ -13,7 +18,7 @@ O sistema realiza:
 * Leitura de vendas a partir de arquivos Excel
 * Validação rigorosa de dados
 * Aplicação de regras de negócio financeiras
-* Simulação de consulta a gateway de pagamento
+* Simulação de consulta a gateway de pagamento (Web Scraping)
 * Geração de relatório final em Excel
 * Log detalhado de execução
 
@@ -49,6 +54,11 @@ projeto_conciliacao/
 ---
 
 ## ⚙️ Como Executar
+
+Pré-requisitos
+
+    • Python 3.10+
+    • Google Chrome instalado (para automação web)
 
 ### 1️⃣ Criar ambiente virtual
 
@@ -120,9 +130,9 @@ Cobertura atual aproximada:
 ## 🧠 Conceitos Aplicados
 
 * Clean Code
-* Single Responsibility Principle
-* Testes automatizados
-* Pytest markers
+* Single Responsibility Principle (SRP)
+* Testes automatizados (Unitários e Integração)
+* Pytest fixtures & markers
 * Dependency isolation
 * Logging estruturado
 * Arquitetura modular
@@ -132,14 +142,13 @@ Cobertura atual aproximada:
 
 ## 🌐 Portal de Pagamento (Simulação)
 
-O projeto já está **estruturalmente preparado** para integração com automação web utilizando **Selenium**.
+O projeto integra uma automação real utilizando Selenium WebDriver.
 
-Atualmente:
+   • Padrão Utilizado: Context Manager (with PortalPagamentosClient() as bot).
 
-* A consulta ao gateway é simulada via função mock
-* A estrutura (`web_scraper.py`, flags de CLI e enums) já está pronta
+   • Resiliência: Tratamento de exceções e esperas explícitas (WebDriverWait).
 
-🔜 A automação real do portal será adicionada em versões futuras.
+   • Configuração: Suporte a execução Headless (sem interface gráfica) para servidores CI/CD.
 
 ---
 
@@ -148,7 +157,7 @@ Atualmente:
 * [x] Regras de negócio completas
 * [x] Testes unitários e de integração
 * [x] Relatório Excel formatado
-* [ ] Integração com portal fake (Playwright)
+* [ ] Integração com portal fake
 * [ ] Pipeline CI (GitHub Actions)
 * [ ] Exportação CSV / JSON
 
