@@ -19,3 +19,4 @@ downloads/
 # IDEs
 .vscode/
 .idea/
+.coverage
