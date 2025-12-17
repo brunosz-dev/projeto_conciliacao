@@ -173,3 +173,4 @@ Desenvolvedor Python | Backend | Automação | Qualidade de Software
 ## 📄 Licença
 
 Projeto desenvolvido para fins educacionais e de portfólio.
+# trigger ci
