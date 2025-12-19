@@ -20,3 +20,7 @@ downloads/
 .vscode/
 .idea/
 .coverage
+
+# Arquivos Excel de entrada e saída
+data/*.xlsx
+output/*.xlsx
