@@ -2,12 +2,12 @@
 
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![Tests](https://img.shields.io/badge/tests-pytest-green.svg)
-![Coverage](https://img.shields.io/badge/coverage-89%25-brightgreen.svg)
+![CI](https://img.shields.io/badge/CI-GitHub%20Actions-success.svg)
 ![Status](https://img.shields.io/badge/status-active-success.svg)
 
 Sistema de conciliação financeira desenvolvido em Python para processar vendas, calcular taxas, lucro, ROI e gerar relatórios Excel formatados.
 
-Este projeto foi estruturado com foco em **qualidade de código, testabilidade e arquitetura profissional**, simulando um cenário real de backend financeiro.
+Este projeto foi estruturado com foco em **qualidade de código, testabilidade e arquitetura profissional**, simulando um cenário real de backend financeiro com integração a portal de pagamentos.
 
 ---
 
@@ -15,14 +15,16 @@ Este projeto foi estruturado com foco em **qualidade de código, testabilidade e
 
 O sistema realiza:
 
-* Leitura de vendas a partir de arquivos Excel
-* Validação rigorosa de dados
-* Aplicação de regras de negócio financeiras
-* Simulação de consulta a gateway de pagamento (Web Scraping)
-* Geração de relatório final em Excel
-* Log detalhado de execução
+- Leitura de vendas a partir de arquivos Excel
+- Validação rigorosa de dados
+- Aplicação de regras de negócio financeiras
+- Consulta automatizada a um **portal de pagamentos fake** (Selenium)
+- Tratamento robusto de erros e exceções
+- Geração de relatório final em Excel
+- Log detalhado de execução
+- Execução automatizada em **CI (GitHub Actions)**
 
-Toda a aplicação é coberta por **testes unitários, testes de I/O e testes de integração end‑to‑end**.
+A aplicação foi pensada para simular **um fluxo real de conciliação financeira**, do input bruto até o relatório final.
 
 ---
 
@@ -32,18 +34,27 @@ Toda a aplicação é coberta por **testes unitários, testes de I/O e testes de
 projeto_conciliacao/
 │
 ├── src/
-│   ├── business_rules.py      # Regras de negócio e cálculos financeiros
-│   ├── excel_reader.py        # Leitura e validação de arquivos Excel
-│   ├── excel_writer.py        # Escrita e formatação do relatório Excel
-│   ├── main.py                # Orquestração do fluxo da aplicação
-│   ├── utils.py               # Utilitários futuros
-│   └── web_scraper.py         # Placeholder para automação web
+│ ├── business_rules.py # Regras de negócio e cálculos financeiros
+│ ├── excel_reader.py # Leitura e validação de arquivos Excel
+│ ├── excel_writer.py # Escrita e formatação do relatório Excel
+│ ├── main.py # Orquestração do fluxo da aplicação (CLI)
+│ ├── utils.py # Utilitários auxiliares
+│ └── web_scraper.py # Automação web real com Selenium
+│
+├── web_portal_fake/ # Portal de pagamentos fake (HTML/CSS/JS)
+│ ├── index.html
+│ ├── styles.css
+│ └── script.js
 │
 ├── tests/
-│   ├── test_business_rules.py # Testes unitários (lógica financeira)
-│   ├── test_excel_reader.py   # Testes de leitura (I/O)
-│   ├── test_excel_writer.py   # Testes de escrita (I/O)
-│   └── test_main_integration.py # Testes end‑to‑end
+│ ├── test_business_rules.py # Testes unitários (lógica financeira)
+│ ├── test_excel_reader.py # Testes de leitura (I/O)
+│ ├── test_excel_writer.py # Testes de escrita (I/O)
+│ └── test_main_integration.py # Testes end-to-end (pipeline completo)
+│
+├── .github/
+│ └── workflows/
+│ └── tests.yml # Pipeline CI (GitHub Actions)
 │
 ├── pytest.ini
 ├── requirements.txt
@@ -55,18 +66,20 @@ projeto_conciliacao/
 
 ## ⚙️ Como Executar
 
-Pré-requisitos
+### Pré-requisitos
 
-    • Python 3.10+
-    • Google Chrome instalado (para automação web)
+- Python 3.10+
+- Google Chrome instalado
+- ChromeDriver compatível com a versão do Chrome
+
+---
 
 ### 1️⃣ Criar ambiente virtual
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-.venv\Scripts\activate     # Windows
-```
+source .venv/bin/activate   # Linux / Mac
+.venv\Scripts\activate      # Windows
 
 ### 2️⃣ Instalar dependências
 
@@ -82,12 +95,13 @@ python -m src.main --input data/vendas.xlsx --output output/relatorio.xlsx
 
 Parâmetros opcionais:
 
-| Flag           | Descrição                            |
-| -------------- | ------------------------------------ |
-| `--input`      | Caminho do Excel de vendas           |
-| `--output`     | Caminho do relatório final           |
-| `--portal-url` | URL do portal de pagamento (mock)    |
-| `--headless`   | Flag preparada para automação futura |
+|      Flag      |                     Descrição                     |
+| -------------- | ------------------------------------------------- |
+| `--input`      | Caminho do Excel de vendas                        |
+| `--output`     | Caminho do relatório final                        |
+| `--portal-url` | URL do portal de pagamento (HTML local ou remoto) |
+| `--headless`   | Executa o Selenium em modo headless               |
+| `---mock`      | Executa o Selenium (simulação de portal)          |
 
 ---
 
@@ -113,6 +127,8 @@ pytest -m io
 pytest -m integration
 ```
 
+Pipeline CI - os testes são executados automaticamente via GitHub Actions a cada push.
+
 ### Cobertura de código
 
 ```bash
@@ -131,24 +147,39 @@ Cobertura atual aproximada:
 
 * Clean Code
 * Single Responsibility Principle (SRP)
-* Testes automatizados (Unitários e Integração)
-* Pytest fixtures & markers
-* Dependency isolation
-* Logging estruturado
 * Arquitetura modular
+* Testes automatizados (Unitários e Integração)
+* Selenium WebDriver (automação web)
+* Tratamento semântico de exceções
+* Logging estruturado
 * CLI com argparse
+* CI/CD com GitHub Actions
 
 ---
 
 ## 🌐 Portal de Pagamento (Simulação)
 
-O projeto integra uma automação real utilizando Selenium WebDriver.
+O projeto integra uma automação real com Selenium WebDriver utilizando um portal de pagamentos fake totalmente funcional, desenvolvido em HTML, CSS e JavaScript.
 
-   • Padrão Utilizado: Context Manager (with PortalPagamentosClient() as bot).
+   • Uso de Context Manager (with PortalPagamentosClient(...))
 
-   • Resiliência: Tratamento de exceções e esperas explícitas (WebDriverWait).
+   • Esperas explícitas inteligentes (WebDriverWait)
 
-   • Configuração: Suporte a execução Headless (sem interface gráfica) para servidores CI/CD.
+   • Hierarquia de exceções customizadas
+
+   • Captura automática de screenshots em erros
+
+   • Suporte a execução headless, ideal para CI/CD
+
+O portal fake simula cenários reais:
+
+   • Transação aprovada
+
+   • Transação pendente
+
+   • Transação inexistente
+
+   • Layout estável para automação
 
 ---
 
@@ -157,8 +188,11 @@ O projeto integra uma automação real utilizando Selenium WebDriver.
 * [x] Regras de negócio completas
 * [x] Testes unitários e de integração
 * [x] Relatório Excel formatado
-* [ ] Integração com portal fake
-* [ ] Pipeline CI (GitHub Actions)
+* [x] Portal de pagamentos fake (HTML/CSS/JS)
+* [x] Automação web com Selenium
+* [x] Pipeline CI (GitHub Actions)
+* [ ] Testes automatizados do web scraper
+* [ ] Gerador de dados de vendas (Excel)
 * [ ] Exportação CSV / JSON
 
 ---
@@ -173,4 +207,4 @@ Desenvolvedor Python | Backend | Automação | Qualidade de Software
 ## 📄 Licença
 
 Projeto desenvolvido para fins educacionais e de portfólio.
-# trigger ci
+
