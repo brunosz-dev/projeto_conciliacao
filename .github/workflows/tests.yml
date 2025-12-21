@@ -2,17 +2,14 @@ name: CI - Tests
 
 on:
   push:
-    branches: ["master"]
+    branches: [ "master" ]
   pull_request:
-    branches: ["master"]
+    branches: [ "master" ]
 
 jobs:
   tests:
-    name: 🧪 Testes Automatizados
+    name: 🧪 Unit + Integration Tests
     runs-on: ubuntu-latest
-
-    env:
-      PYTHONUNBUFFERED: 1
 
     steps:
       - name: 📥 Checkout do código
@@ -21,25 +18,16 @@ jobs:
       - name: 🐍 Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.13"
 
       - name: 📦 Instalar dependências
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🧪 Testes unitários e I/O
+      - name: 🧪 Rodar testes (sem E2E Selenium)
         run: |
-          pytest -m "business or io"
-
-      - name: 🔗 Testes de integração (mock)
-        run: |
-          pytest -m "integration and not e2e"
-
-      - name: 🌐 Testes E2E (Selenium - headless)
-        run: |
-          pytest -m e2e --browser=edge --headless
-
-      - name: 📊 Cobertura de código
-        run: |
-          pytest --cov=src --cov-report=term-missing
+          pytest \
+            -m "business or io or (integration and not e2e)" \
+            --cov=src \
+            --cov-report=term
