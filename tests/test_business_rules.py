@@ -11,9 +11,9 @@ from src.business_rules import (
     TAXAS_CONFIG
 )
 
-# =============================================================================
+# ======================================================================
 # 1. TESTES DE CÁLCULO DE TAXAS (Sucesso)
-# =============================================================================
+# ======================================================================
 
 @pytest.mark.parametrize("valor_bruto, forma_pag, esperado", [
     (100.00, "cartao_credito", 2.50),  # 2.5% de 100
@@ -42,9 +42,9 @@ def test_calcular_taxa_input_maiusculo_espacos():
     # Assert
     assert resultado == 0.50  # 0.5% de 100
 
-# =============================================================================
+# ======================================================================
 # 2. TESTES DE REGRAS DE NEGÓCIO COMPLETAS (Sucesso)
-# =============================================================================
+# ======================================================================
 
 def test_calcular_resultados_fluxo_padrao():
     """
@@ -98,9 +98,9 @@ def test_calcular_resultados_prejuizo():
     assert resultado["valor_liquido"] == 5.50
     assert resultado["roi"] < 0
 
-# =============================================================================
+# ======================================================================
 # 3. TESTES DE ERROS E VALIDAÇÕES (Exceptions)
-# =============================================================================
+# ======================================================================
 
 def test_calcular_taxa_forma_invalida():
     """Deve lançar ValueError se a forma de pagamento não existir."""
@@ -127,9 +127,9 @@ def test_validar_valores_numericos_invalidos(campo, valor_invalido):
     with pytest.raises(ValueError):
         calcular_resultados(**params)
 
-# =============================================================================
+# ======================================================================
 # 4. CASOS DE BORDA (Edge Cases)
-# =============================================================================
+# ======================================================================
 
 def test_custo_zero_roi():
     """Se o custo for zero, ROI deve ser 0 (para evitar divisão por zero)."""
@@ -149,9 +149,9 @@ def test_obter_informacoes_taxa():
     assert info["valor"] == 0.025
     assert info["percentual"] == "2.5%"
 
-# =============================================================================
+# ======================================================================
 # 5. TESTE DE INTEGRIDADE (Configuração)
-# =============================================================================
+# ======================================================================
 
 def test_single_source_of_truth():
     """Garante que todas as formas do Enum tenham uma configuração de taxa."""
