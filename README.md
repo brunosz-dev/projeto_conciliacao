@@ -68,9 +68,13 @@ projeto_conciliacao/
 
 ### Pré-requisitos
 
+### Pré-requisitos
+
 - Python 3.10+
-- Google Chrome instalado
-- ChromeDriver compatível com a versão do Chrome
+- Microsoft Edge **ou** Google Chrome
+- WebDriver compatível:
+  - EdgeDriver (padrão)
+  - ChromeDriver (opcional)
 
 ---
 
@@ -95,13 +99,14 @@ python -m src.main --input data/vendas.xlsx --output output/relatorio.xlsx
 
 Parâmetros opcionais:
 
-|      Flag      |                     Descrição                     |
-| -------------- | ------------------------------------------------- |
-| `--input`      | Caminho do Excel de vendas                        |
-| `--output`     | Caminho do relatório final                        |
-| `--portal-url` | URL do portal de pagamento (HTML local ou remoto) |
-| `--headless`   | Executa o Selenium em modo headless               |
-| `---mock`      | Executa o Selenium (simulação de portal)          |
+|      Flag      |                 Descrição                 |
+| -------------- | ----------------------------------------- |
+| `--input`      | Caminho do Excel de vendas                |
+| `--output`     | Caminho do relatório final                |
+| `--portal-url` | URL do portal de pagamento                |
+| `--browser`    | Navegador (`edge` ou `chrome`)            |
+| `--headless`   | Executa o Selenium sem interface gráfica  |
+| `---mock`      | Usa portal simulado (sem Selenium real)   |
 
 ---
 
@@ -114,10 +119,16 @@ O projeto utiliza **pytest** com segmentação clara por tipo de teste:
 * `integration` → Fluxo completo (`main.py`)
 
 ### Executar todos os testes
-
-```bash
 pytest
-```
+
+### Executar apenas Selenium
+pytest -m selenium
+
+### Executar E2E completo (headless)
+pytest -m e2e --headless
+
+### Executar integração sem Selenium
+pytest -m "integration and not e2e"
 
 ### Executar por categoria
 
@@ -187,12 +198,12 @@ O portal fake simula cenários reais:
 
 * [x] Regras de negócio completas
 * [x] Testes unitários e de integração
+* [x] Testes automatizados do web scraper
+* [x] Gerador de dados de vendas (Excel)
 * [x] Relatório Excel formatado
 * [x] Portal de pagamentos fake (HTML/CSS/JS)
 * [x] Automação web com Selenium
-* [x] Pipeline CI (GitHub Actions)
-* [ ] Testes automatizados do web scraper
-* [ ] Gerador de dados de vendas (Excel)
+* [ ] Pipeline CI com GitHub Actions
 * [ ] Exportação CSV / JSON
 
 ---
