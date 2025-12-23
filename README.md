@@ -1,8 +1,9 @@
 # 📊 Projeto de Conciliação Financeira
 
-![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
+![Python](https://img.shields.io/badge/python-3.13-blue)
 ![Tests](https://img.shields.io/badge/tests-pytest-green.svg)
-![CI](https://img.shields.io/badge/CI-GitHub%20Actions-success.svg)
+![CI Tests](https://github.com/brunosz-dev/projeto_conciliacao/actions/workflows/tests.yml/badge.svg)
+![Coverage](https://img.shields.io/badge/coverage-89%25-brightgreen)
 ![Status](https://img.shields.io/badge/status-active-success.svg)
 
 Sistema de conciliação financeira desenvolvido em Python para processar vendas, calcular taxas, lucro, ROI e gerar relatórios Excel formatados.
@@ -203,7 +204,7 @@ O portal fake simula cenários reais:
 * [x] Relatório Excel formatado
 * [x] Portal de pagamentos fake (HTML/CSS/JS)
 * [x] Automação web com Selenium
-* [ ] Pipeline CI com GitHub Actions
+* [x] Pipeline CI com GitHub Actions
 * [ ] Exportação CSV / JSON
 
 ---
