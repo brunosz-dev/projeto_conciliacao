@@ -43,17 +43,19 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="session")
 def portal_url():
-    """Retorna a URL do portal fake."""
+    """
+    Retorna a URL do portal fake de forma compatível com CI/Linux.
+    """
     base_dir = Path.cwd()
     html_path = base_dir / "web_portal_fake" / "index.html"
-
+    
     if not html_path.exists():
-        pytest.skip(
-            "Portal fake não encontrado. "
-            "Execute: python scripts/gerar_portal_fake.py"
-        )
-
-    return f"file://{html_path}"
+        html_path = Path(__file__).resolve().parent.parent / "web_portal_fake" / "index.html"
+    
+    if not html_path.exists():
+        pytest.skip(f"Portal fake não encontrado em: {html_path}")
+    
+    return html_path.as_uri()
 
 
 @pytest.fixture
